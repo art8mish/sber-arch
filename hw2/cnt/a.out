@@ -1,0 +1,132 @@
+#! /usr/bin/vvp
+:ivl_version "12.0 (stable)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision - 12;
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/system.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/vhdl_sys.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/vhdl_textio.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/v2005_math.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/va_math.vpi";
+S_0x592fbdf597f0 .scope module, "cnt_en_clr_tb" "cnt_en_clr_tb" 2 3;
+ .timescale -9 -12;
+P_0x592fbdf59980 .param/l "CNT_WIDTH" 1 2 4, +C4<00000000000000000000000000000010>;
+v0x592fbdf70d80_0 .var "arstn_i", 0 0;
+v0x592fbdf70e40_0 .var "clk_i", 0 0;
+v0x592fbdf70ee0_0 .var "cnt_clr_i", 0 0;
+v0x592fbdf70fb0_0 .var "cnt_en_i", 0 0;
+v0x592fbdf71080_0 .net "cnt_o", 1 0, L_0x592fbdf71330;  1 drivers
+v0x592fbdf71170_0 .net "ovf_o", 0 0, L_0x592fbdf71240;  1 drivers
+E_0x592fbdf57770 .event posedge, v0x592fbdf47340_0;
+S_0x592fbdf1e490 .scope module, "cnt_en_clr_inst" "cnt_en_clr" 2 16, 3 1 0, S_0x592fbdf597f0;
+ .timescale 0 0;
+    .port_info 0 /INPUT 1 "clk_i";
+    .port_info 1 /INPUT 1 "arstn_i";
+    .port_info 2 /INPUT 1 "cnt_en_i";
+    .port_info 3 /INPUT 1 "cnt_clr_i";
+    .port_info 4 /OUTPUT 2 "cnt_o";
+    .port_info 5 /OUTPUT 1 "ovf_o";
+P_0x592fbdf1e670 .param/l "CNT_WIDTH" 0 3 2, +C4<00000000000000000000000000000010>;
+v0x592fbdf46d60_0 .net *"_ivl_4", 2 0, v0x592fbdf47e30_0;  1 drivers
+v0x592fbdf47130_0 .net "arstn_i", 0 0, v0x592fbdf70d80_0;  1 drivers
+v0x592fbdf47340_0 .net "clk_i", 0 0, v0x592fbdf70e40_0;  1 drivers
+v0x592fbdf47730_0 .net "cnt_clr_i", 0 0, v0x592fbdf70ee0_0;  1 drivers
+v0x592fbdf47ab0_0 .net "cnt_en_i", 0 0, v0x592fbdf70fb0_0;  1 drivers
+v0x592fbdf47e30_0 .var "cnt_ff", 2 0;
+v0x592fbdf70b20_0 .net "cnt_o", 1 0, L_0x592fbdf71330;  alias, 1 drivers
+v0x592fbdf70c00_0 .net "ovf_o", 0 0, L_0x592fbdf71240;  alias, 1 drivers
+E_0x592fbdf57a80/0 .event negedge, v0x592fbdf47130_0;
+E_0x592fbdf57a80/1 .event posedge, v0x592fbdf47340_0;
+E_0x592fbdf57a80 .event/or E_0x592fbdf57a80/0, E_0x592fbdf57a80/1;
+L_0x592fbdf71240 .part v0x592fbdf47e30_0, 2, 1;
+L_0x592fbdf71330 .part v0x592fbdf47e30_0, 0, 2;
+    .scope S_0x592fbdf1e490;
+T_0 ;
+    %wait E_0x592fbdf57a80;
+    %load/vec4 v0x592fbdf47130_0;
+    %nor/r;
+    %load/vec4 v0x592fbdf47730_0;
+    %or;
+    %flag_set/vec4 8;
+    %jmp/0xz  T_0.0, 8;
+    %pushi/vec4 0, 0, 3;
+    %assign/vec4 v0x592fbdf47e30_0, 0;
+    %jmp T_0.1;
+T_0.0 ;
+    %load/vec4 v0x592fbdf47ab0_0;
+    %flag_set/vec4 8;
+    %jmp/0 T_0.2, 8;
+    %load/vec4 v0x592fbdf47e30_0;
+    %addi 1, 0, 3;
+    %jmp/1 T_0.3, 8;
+T_0.2 ; End of true expr.
+    %load/vec4 v0x592fbdf47e30_0;
+    %jmp/0 T_0.3, 8;
+ ; End of false expr.
+    %blend;
+T_0.3;
+    %assign/vec4 v0x592fbdf47e30_0, 0;
+T_0.1 ;
+    %jmp T_0;
+    .thread T_0;
+    .scope S_0x592fbdf597f0;
+T_1 ;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x592fbdf70e40_0, 0, 1;
+    %delay 1000, 0;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x592fbdf70e40_0, 0, 1;
+    %delay 1000, 0;
+    %jmp T_1;
+    .thread T_1;
+    .scope S_0x592fbdf597f0;
+T_2 ;
+    %vpi_call 2 32 "$dumpvars" {0 0 0};
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x592fbdf70d80_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x592fbdf70fb0_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x592fbdf70ee0_0, 0, 1;
+    %wait E_0x592fbdf57770;
+    %delay 500, 0;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x592fbdf70d80_0, 0, 1;
+    %wait E_0x592fbdf57770;
+    %delay 500, 0;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x592fbdf70d80_0, 0, 1;
+    %wait E_0x592fbdf57770;
+    %delay 500, 0;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x592fbdf70fb0_0, 0, 1;
+    %delay 2000, 0;
+    %wait E_0x592fbdf57770;
+    %wait E_0x592fbdf57770;
+    %delay 500, 0;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x592fbdf70fb0_0, 0, 1;
+    %delay 2000, 0;
+    %wait E_0x592fbdf57770;
+    %delay 500, 0;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x592fbdf70fb0_0, 0, 1;
+    %wait E_0x592fbdf57770;
+    %delay 500, 0;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x592fbdf70ee0_0, 0, 1;
+    %wait E_0x592fbdf57770;
+    %delay 1500, 0;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x592fbdf70ee0_0, 0, 1;
+    %delay 10000, 0;
+    %wait E_0x592fbdf57770;
+    %delay 500, 0;
+    %vpi_call 2 56 "$finish" {0 0 0};
+    %end;
+    .thread T_2;
+# The file index is used to find the file name in the following table.
+:file_names 4;
+    "N/A";
+    "<interactive>";
+    "cnt_en_clr_tb.v";
+    "cnt_en_clr.v";
